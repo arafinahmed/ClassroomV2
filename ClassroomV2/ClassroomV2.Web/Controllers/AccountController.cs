@@ -57,7 +57,7 @@ namespace Project.Controllers
                     ModelState.AddModelError(string.Empty, "You failed the CAPTCHA.");
                     return View(model);
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("view_permission", "true"));
                 if (result.Succeeded)
@@ -82,7 +82,7 @@ namespace Project.Controllers
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         if (model.ReturnUrl != "/")
                             return LocalRedirect(model.ReturnUrl);
-                        else return RedirectToAction("Index", "Group");
+                        else return RedirectToAction("Index", "Home");
                     }
 
                 }
@@ -133,7 +133,7 @@ namespace Project.Controllers
                     _logger.LogInformation("User logged in. ");
                     if (model.ReturnUrl != "/")
                         return LocalRedirect(model.ReturnUrl);
-                    else return RedirectToAction("Index", "Group");
+                    else return RedirectToAction("Index", "Home");
 
                 }
                 if (result.RequiresTwoFactor)
