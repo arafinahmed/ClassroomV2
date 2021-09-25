@@ -152,7 +152,7 @@ namespace ClassroomV2.Web
                 );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{Id?}");
+                    pattern: "{controller=Home}/{action=Index}/{Id?}");
             });
         }
         private (string connectionString, string migrationAssemblyName) GetConnectionStringAndAssemblyName()
