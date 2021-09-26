@@ -1,0 +1,88 @@
+﻿@model ClassroomV2.Web.Models.Classroom.LoadClassroom
+@{
+    ViewData["Title"] = "People";
+}
+@section Scripts{
+    <script>
+        $(function () {
+            $('#teachers').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "searching": false,
+                "paging": false,
+                "ajax": {
+                    "url": "/Classroom/GetTeachers/?id=@Model.ClassroomId",
+                },
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 1,
+                    "render": function (data, type, row) {
+                        return `<button type="submit" class="btn btn-primary btn-sm" onclick="window.location.href='/Classroom/Classroom/${data}'" value='${data}'>
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Send Mail
+                                        </button>
+                                        `;
+                    }
+                }
+                ]
+            });
+        });
+        $(function () {
+            $('#students').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "searching": false,
+                "paging": false,
+                "ajax": {
+                    "url": "/Classroom/GetStudents/?id=@Model.ClassroomId",
+                },
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 1,
+                    "render": function (data, type, row) {
+                        return `<button type="submit" class="btn btn-primary btn-sm" onclick="window.location.href='/Classroom/Classroom/${data}'" value='${data}'>
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Send Mail
+                                        </button>
+                                        `;
+                    }
+                }
+                ]
+            });
+        });
+    </script>
+ }
+
+<div class="row">
+
+    <partial name="_MenuPartial" />
+    <div class="col-md-9">
+        <h3>@Model.ClassroomName</h3>
+        <hr />
+        <h4>Teacher</h4>
+        <table id="teachers" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+        </table>
+        <hr />
+        <h4>Student</h4>
+        <table id="students" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+
+</div>
+

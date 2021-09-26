@@ -51,6 +51,7 @@ namespace ClassroomV2.Web
             builder.RegisterModule(new ManagerModule(connectionInfo.connectionString,
                 connectionInfo.migrationAssemblyName));
             builder.RegisterModule(new CommonModule(Configuration));
+            builder.RegisterModule(new WebModule());
 
         }
 

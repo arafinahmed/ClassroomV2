@@ -3,8 +3,75 @@
     ViewData["Title"] = "Index";
 }
 
+@section Scripts
+{
+    <script>
+        $(function () {
+            $('#classes').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "/Classroom/GetClasses",
+                },
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 1,
+                    "render": function (data, type, row) {
+                        return `<button type="submit" class="btn btn-primary btn-sm" onclick="window.location.href='/Classroom/Classroom/${data}'" value='${data}'>
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Enter
+                                        </button>
+                                        `;
+                    }
+                }
+                ]
+            });
+        });
+    </script>
+}
 
 
-<a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Classroom" asp-action="CreateClassroom">Create Classroom</a>
-<button type="button" class="btn btn-outline-secondary">Join Classroom </button>
+<div>
+    <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Classroom" asp-action="CreateClassroom">Create Classroom</a>
+    <a type="button" class="btn btn-outline-success" asp-area="" asp-controller="Classroom" asp-action="JoinClassroom">
+        Join Classroom
+    </a>
+</div>
+<br />
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">All of your Classes</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="classes" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Classroom Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Classroom Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
 

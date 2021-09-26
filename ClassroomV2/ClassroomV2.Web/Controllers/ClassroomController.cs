@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using ClassroomV2.Membership.Entities;
 using ClassroomV2.Web.Models.Classroom;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace ClassroomV2.Web.Controllers
 {
+    [Authorize(Policy = "ViewPermission")]
     public class ClassroomController : Controller
     {
         private readonly ILogger<ClassroomController> _logger;
@@ -31,9 +33,12 @@ namespace ClassroomV2.Web.Controllers
         {
             return View();
         }
-        public IActionResult Classroom()
+        public IActionResult Classroom(int id)
         {
-            return View();
+            var email = User.Identity.Name;
+            var model = _scope.Resolve<LoadClassroom>();
+            model.LoadClassRoomData(id, email);
+            return View(model);
         }
         public IActionResult CreateClassroom()
         {
@@ -54,6 +59,50 @@ namespace ClassroomV2.Web.Controllers
                 return View();
             }
             return RedirectToAction("Index", "Classroom");
+        }
+        public IActionResult JoinClassroom()
+        {
+            var model = _scope.Resolve<CreateClassroomModel>();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult JoinClassroom(int Id)
+        {
+            var email = User.Identity.Name;
+            var model = _scope.Resolve<CreateClassroomModel>();
+            model.JoinClassroom(Id, email);
+            return View(model);
+        }
+        public JsonResult GetClasses()
+        {
+            var model = _scope.Resolve<CreateClassroomModel>();
+            var email = User.Identity.Name;
+            var data = model.GetClasses(email);
+            return Json(data);
+        }
+
+        public JsonResult GetTeachers(int id)
+        {
+            var model = _scope.Resolve<LoadClassroom>();
+            var email = User.Identity.Name;
+            var data = model.GetTeachers(id);
+            return Json(data);
+        }
+        public JsonResult GetStudents(int id)
+        {
+            var model = _scope.Resolve<LoadClassroom>();
+            var email = User.Identity.Name;
+            var data = model.GetStudents(id);
+            return Json(data);
+        }
+
+        public IActionResult People(int userid)
+        {
+            var email = User.Identity.Name;
+            var model = _scope.Resolve<LoadClassroom>();
+            model.LoadClassRoomData(userid, email);
+            return View(model);
         }
     }
 }

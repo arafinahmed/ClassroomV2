@@ -1,0 +1,31 @@
+﻿@model ClassroomV2.Web.Models.Classroom.CreateClassroomModel
+@{
+    ViewData["Title"] = "JoinClassroom";
+}
+
+<h1>Join a Classroom</h1>
+
+<form asp-controller="Classroom" asp-action="JoinClassroom" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Classroom Id</label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" name="Id" placeholder="120">
+    </div>
+
+    <div>
+        <a type="button" class="btn btn-outline-danger" asp-area="" asp-controller="Classroom" asp-action="Index">Cancel</a>
+        <button type="submit" class="btn btn-outline-success">Join Classroom </button>
+    </div>
+</form>
+@{ if (Model.JoinCalled)
+    {
+        if (Model.joinSuccess)
+        {
+            <p class="text-success">@Model.joinMessage</p>
+        }
+        else
+        {
+            <p class="text-danger">@Model.joinMessage</p>
+        }
+    }
+}

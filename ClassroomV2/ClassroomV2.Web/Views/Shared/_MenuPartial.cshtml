@@ -1,0 +1,37 @@
+﻿@model ClassroomV2.Web.Models.Classroom.LoadClassroom
+<div class="col-md-2">
+    <input type="hidden" asp-for="ClassroomId" />
+    <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Group" asp-action="Index" class="nav-link">
+                    <span data-feather="users"></span>
+                    Stream
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="menu"></span>
+                    Classwork
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Classroom" asp-action="People" class="nav-link" asp-route-userid="@Model.ClassroomId">
+                    <span data-feather="list"></span>
+                    People
+                </a>
+            </li>
+            @{ if (Model.IsTeacher)
+                {
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Import" asp-action="Index" class="nav-link">
+                            <span data-feather="arrow-down-circle"></span>
+                            Grade
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+
+</div>

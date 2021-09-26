@@ -1,7 +1,13 @@
-﻿
+﻿@model ClassroomV2.Web.Models.Classroom.LoadClassroom
 @{
     ViewData["Title"] = "Classroom";
 }
+<div class="row">
 
-<h1>Classroom</h1>
+    <partial name="_MenuPartial" />
+    <div class="col-md-9">
+        <h3>@Model.ClassroomName</h3>
+    </div>
+
+</div>
 

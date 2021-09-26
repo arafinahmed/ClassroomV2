@@ -9,7 +9,6 @@ namespace ClassroomV2.Manager.Entities
         public int Id { get; set; }
         [Required, MaxLength(256)]
         public string email { get; set; }
-        public string StudentName { get; set; }
         [ForeignKey("Classroom")]
         public int ClassroomId { get; set; }
         public Classroom Classroom { get; set; }

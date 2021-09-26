@@ -16,6 +16,10 @@ namespace ClassroomV2.Web.Models.Classroom
         public Guid AspUserId { get; set; }
         public string email { get; set; }
 
+        public bool JoinCalled { get; set; }
+        public bool joinSuccess { get; set; }
+        public string joinMessage { get; set; }
+
         private IClassroomService _service;
         private ILifetimeScope _scope;
         public CreateClassroomModel() { }
@@ -38,6 +42,28 @@ namespace ClassroomV2.Web.Models.Classroom
                 CreatorId = AspUserId,
                 Email = email
             });
+        }
+        internal void JoinClassroom(int id, string mail)
+        {
+            var res =  _service.JoinClassroom(id, mail);
+            JoinCalled = true;
+            joinMessage = res.message;
+            joinSuccess = res.x;
+        }
+        internal object GetClasses(string mail)
+        {
+            var data = _service.GetClasses(mail);
+            return new
+            {
+                recordsTotal = data.Count,
+                recordsFiltered = data.Count,
+                data = (from record in data
+                        select new string[]
+                        {
+                            record.ClassroomName,
+                            record.Id.ToString()
+                        }).ToArray()
+            };
         }
     }
 }
