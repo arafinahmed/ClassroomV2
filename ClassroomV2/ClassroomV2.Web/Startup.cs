@@ -1,6 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using ClassroomV2.Common;
+using ClassroomV2.Manager;
+using ClassroomV2.Manager.Context;
 using ClassroomV2.Membership;
 using ClassroomV2.Membership.BusinessObject;
 using ClassroomV2.Membership.Contexts;
@@ -46,6 +48,8 @@ namespace ClassroomV2.Web
             var connectionInfo = GetConnectionStringAndAssemblyName();
             builder.RegisterModule(new MembershipModule(connectionInfo.connectionString,
                 connectionInfo.migrationAssemblyName));
+            builder.RegisterModule(new ManagerModule(connectionInfo.connectionString,
+                connectionInfo.migrationAssemblyName));
             builder.RegisterModule(new CommonModule(Configuration));
 
         }
@@ -56,6 +60,10 @@ namespace ClassroomV2.Web
             var connectionInfo = GetConnectionStringAndAssemblyName();
 
             services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionInfo.connectionString,
+                b => b.MigrationsAssembly(connectionInfo.migrationAssemblyName)));
+
+            services.AddDbContext<ManagerContext>(options =>
                 options.UseSqlServer(connectionInfo.connectionString,
                 b => b.MigrationsAssembly(connectionInfo.migrationAssemblyName)));
 

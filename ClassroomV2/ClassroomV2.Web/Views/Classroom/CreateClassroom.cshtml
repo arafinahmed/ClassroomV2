@@ -1,0 +1,22 @@
+﻿@model ClassroomV2.Web.Models.Classroom.CreateClassroomModel
+@{
+    ViewData["Title"] = "CreateClassroom";
+}
+
+<h1>Create new Classroom</h1>
+<form asp-controller="Classroom" asp-action="CreateClassroom" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Classroom Name</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" asp-for="ClassroomName" placeholder="PHY 101">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" asp-for="Description"></textarea>
+    </div>
+    <div>
+        <a type="button" class="btn btn-outline-danger" asp-area="" asp-controller="Classroom" asp-action="Index">Cancel</a>
+        <button type="submit" class="btn btn-outline-success">Create Classroom </button>
+    </div>
+</form>
+

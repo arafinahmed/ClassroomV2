@@ -82,7 +82,7 @@ namespace Project.Controllers
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         if (model.ReturnUrl != "/")
                             return LocalRedirect(model.ReturnUrl);
-                        else return RedirectToAction("Index", "Home");
+                        else return RedirectToAction("Index", "Classroom");
                     }
 
                 }
@@ -133,7 +133,7 @@ namespace Project.Controllers
                     _logger.LogInformation("User logged in. ");
                     if (model.ReturnUrl != "/")
                         return LocalRedirect(model.ReturnUrl);
-                    else return RedirectToAction("Index", "Home");
+                    else return RedirectToAction("Index", "Classroom");
 
                 }
                 if (result.RequiresTwoFactor)

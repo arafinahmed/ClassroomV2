@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassroomV2.Web", "ClassroomV2.Web\ClassroomV2.Web.csproj", "{5B21B554-15B8-46DD-8F4F-0D1C6A271EFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassroomV2.Web", "ClassroomV2.Web\ClassroomV2.Web.csproj", "{5B21B554-15B8-46DD-8F4F-0D1C6A271EFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassroomV2.Membership", "ClassroomV2.Membership\ClassroomV2.Membership.csproj", "{EF215AE7-AEF7-4B9A-B6AA-F469F48F2581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassroomV2.Membership", "ClassroomV2.Membership\ClassroomV2.Membership.csproj", "{EF215AE7-AEF7-4B9A-B6AA-F469F48F2581}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassroomV2.Common", "ClassroomV2.Common\ClassroomV2.Common.csproj", "{D603772C-B1CD-468C-A11B-607797B0FE96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassroomV2.Common", "ClassroomV2.Common\ClassroomV2.Common.csproj", "{D603772C-B1CD-468C-A11B-607797B0FE96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassroomV2.DataAccessLayer", "ClassroomV2.DataAccessLayer\ClassroomV2.DataAccessLayer.csproj", "{1B9689C5-A1FD-4686-9B52-8201E42C5C61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassroomV2.DataAccessLayer", "ClassroomV2.DataAccessLayer\ClassroomV2.DataAccessLayer.csproj", "{1B9689C5-A1FD-4686-9B52-8201E42C5C61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassroomV2.Manager", "ClassroomV2.Manager\ClassroomV2.Manager.csproj", "{9415BE9B-9AD8-4728-896A-9A841AD73540}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1B9689C5-A1FD-4686-9B52-8201E42C5C61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B9689C5-A1FD-4686-9B52-8201E42C5C61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B9689C5-A1FD-4686-9B52-8201E42C5C61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9415BE9B-9AD8-4728-896A-9A841AD73540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9415BE9B-9AD8-4728-896A-9A841AD73540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9415BE9B-9AD8-4728-896A-9A841AD73540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9415BE9B-9AD8-4728-896A-9A841AD73540}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
