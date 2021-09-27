@@ -19,7 +19,7 @@ namespace ClassroomV2.Manager.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public void CreateClassroom(Classroom classroom)
+        public int CreateClassroom(Classroom classroom)
         {
             if (classroom == null)
                 throw new InvalidOperationException("no Classroom is provided");
@@ -31,6 +31,7 @@ namespace ClassroomV2.Manager.Services
                 _unitOfWork.ClassUser.Add(new Entities.ClassUser { ClassId = entity.Id, email = classroom.Email });
                 _unitOfWork.Teacher.Add(new Entities.Teacher { ClassroomId = entity.Id, email = classroom.Email });
                 _unitOfWork.Save();
+                return entity.Id;
             }
             catch
             {
@@ -44,7 +45,7 @@ namespace ClassroomV2.Manager.Services
             var count = _unitOfWork.ClassUser.GetCount(x => x.ClassId == classId && x.email == email);
             if(count != 0)
             {
-                return (false, "You are already in this class");
+                return (false, "Already in this class");
             }
             count = _unitOfWork.Classroom.GetCount(x => x.Id == classId);
             if(count ==0)
@@ -56,6 +57,33 @@ namespace ClassroomV2.Manager.Services
             _unitOfWork.Save();
             return (true, "Successfull");
         }
+        public (bool x, string message) AddTeacherToClass(int classId, string email)
+        {
+            var count = _unitOfWork.Teacher.GetCount(x => x.ClassroomId == classId && x.email == email);
+            if (count != 0)
+            {
+                return (false, "Already teacher in this class");
+            }
+            count = _unitOfWork.Classroom.GetCount(x => x.Id == classId);
+            if (count == 0)
+            {
+                return (false, "No classroom found");
+            }
+            _unitOfWork.Teacher.Add(new Entities.Teacher { ClassroomId = classId, email = email });
+            count = _unitOfWork.ClassUser.GetCount(x => x.ClassId == classId && x.email == email);
+            if (count == 0)
+            {
+                _unitOfWork.ClassUser.Add(new Entities.ClassUser { ClassId = classId, email = email });
+            }
+            var stdEntity = _unitOfWork.Student.Get(x => x.ClassroomId == classId && x.email == email, "");
+            if(stdEntity.Count > 0)
+            {
+                _unitOfWork.Student.Remove(stdEntity.First().Id);
+            }
+            _unitOfWork.Save();
+            return (true, "Successfull");
+        }
+        
 
         public IList<Classroom> GetClasses(string mail)
         {
@@ -120,5 +148,21 @@ namespace ClassroomV2.Manager.Services
             }
             return (false, false, "", "", -1);
         }
+
+        public void CreatePost(Post post)
+        {
+            if (post == null)
+                throw new InvalidOperationException("no Classroom is provided");
+            try
+            {
+                var entity = _mapper.Map<Entities.Post>(post);
+                _unitOfWork.Post.Add(entity);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Post not Created");
+            }
+        }
+
     }
 }

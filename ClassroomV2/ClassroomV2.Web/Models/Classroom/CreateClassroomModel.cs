@@ -33,9 +33,9 @@ namespace ClassroomV2.Web.Models.Classroom
             _service = _scope.Resolve<IClassroomService>();
         }
 
-        internal void CreateClassroom()
+        internal int CreateClassroom()
         {
-            _service.CreateClassroom(new ClassroomV2.Manager.BusinessObjects.Classroom
+            return _service.CreateClassroom(new ClassroomV2.Manager.BusinessObjects.Classroom
             {
                 ClassroomName = ClassroomName,
                 Description = Description,

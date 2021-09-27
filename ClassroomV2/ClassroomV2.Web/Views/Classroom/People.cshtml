@@ -10,6 +10,7 @@
                 "serverSide": true,
                 "searching": false,
                 "paging": false,
+                "bInfo": false,
                 "ajax": {
                     "url": "/Classroom/GetTeachers/?id=@Model.ClassroomId",
                 },
@@ -34,6 +35,7 @@
                 "serverSide": true,
                 "searching": false,
                 "paging": false,
+                "bInfo": false,
                 "ajax": {
                     "url": "/Classroom/GetStudents/?id=@Model.ClassroomId",
                 },
@@ -71,6 +73,24 @@
             </thead>
 
         </table>
+        @{
+            if (Model.IsTeacher)
+            {
+                <form asp-controller="Classroom" asp-action="AddTeacher" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="row">
+                        <div class="mb-3 col-md-7">
+                            <input asp-for="TeacherEmail" type="email" class="form-control" id="exampleFormControlInput2" placeholder="teacher@juniv.edu" required>
+                            <input type="hidden" asp-for="ClassroomId" />
+                            <input type="hidden" asp-for="ClassroomName" />
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-outline-success">Add Teacher </button>
+                        </div>
+                    </div>
+                </form>
+            }
+        }
         <hr />
         <h4>Student</h4>
         <table id="students" class="table table-bordered table-hover">
@@ -82,6 +102,24 @@
             </thead>
 
         </table>
+        @{
+            if (Model.IsTeacher)
+            {
+                <form asp-controller="Classroom" asp-action="AddStudent" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="row">
+                        <div class="mb-3 col-md-7">
+                            <input required asp-for="StudentEmail" type="email" class="form-control" id="exampleFormControlInput1" placeholder="student@gmail.com">
+                            <input type="hidden" asp-for="ClassroomId" />
+                            <input type="hidden" asp-for="ClassroomName" />
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-outline-success">Add Student </button>
+                        </div>
+                    </div>
+                </form>
+            }
+        }
     </div>
 
 </div>

@@ -4,7 +4,7 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a asp-area="" asp-controller="Group" asp-action="Index" class="nav-link">
+                <a asp-area="" asp-controller="Classroom" asp-action="Classroom" class="nav-link" asp-route-id="@Model.ClassroomId">
                     <span data-feather="users"></span>
                     Stream
                 </a>
@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a asp-area="" asp-controller="Classroom" asp-action="People" class="nav-link" asp-route-userid="@Model.ClassroomId">
+                <a asp-area="" asp-controller="Classroom" asp-action="People" class="nav-link" asp-route-id="@Model.ClassroomId">
                     <span data-feather="list"></span>
                     People
                 </a>

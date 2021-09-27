@@ -16,6 +16,9 @@ namespace ClassroomV2.Web.Models.Classroom
         public string ClassroomName { get; set; }
         public string Description { get; set; }
         public int ClassroomId { get; set; }
+
+        public string StudentEmail { get; set; }
+        public string TeacherEmail { get; set; }
         private IClassroomService _service;
         private ILifetimeScope _scope;
         public LoadClassroom() { }
@@ -71,6 +74,17 @@ namespace ClassroomV2.Web.Models.Classroom
                             record.StudentId.ToString()
                         }).ToArray()
             };
+        }
+
+        internal bool AddStudentToClass(int classid, string email)
+        {
+            var res = _service.JoinClassroom(classid, email);
+            return res.x;
+        }
+        internal bool AddTeacherToClass(int classid, string email)
+        {
+            var res = _service.AddTeacherToClass(classid, email);
+            return res.x;
         }
     }
 }
