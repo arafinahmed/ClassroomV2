@@ -43,10 +43,25 @@ namespace ClassroomV2.Common.Utilities
         }
         public void BroadCast(IList<string> receivers, string subject, string body)
         {
-            foreach(var receiver in receivers)
+            using var client = new SmtpClient();
+            client.Timeout = 60000;
+            client.Connect(_host, _port, _useSSL);
+            client.Authenticate(_username, _password);
+            foreach (var receiver in receivers)
             {
-                SendEmail(receiver, subject, body);
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress(_from, _from));
+                message.To.Add(new MailboxAddress(receiver, receiver));
+                message.Subject = subject;
+
+                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                {
+                    Text = body
+                };
+                client.Send(message);
             }
+
+            client.Disconnect(true);
         }
     }
 }

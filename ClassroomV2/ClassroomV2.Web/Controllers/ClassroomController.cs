@@ -167,10 +167,10 @@ namespace ClassroomV2.Web.Controllers
                     }
                     model.PostUpload();
                     var mailList = model.StudentsMail(model.ClassroomId);
-                    var body = $"{model.Description}";
+                    var body = $"{model.PostDescription}";
                     if (!string.IsNullOrEmpty(model.PostFilePath))
                     {
-                        body = $"{model.Description}" +
+                        body = $"{model.PostDescription}" +
                             $"<b>There is an attachment. Please Visit your classroom.</b>";
                     }
                     _emailService.BroadCast(mailList, "New Announcement in " + model.ClassroomName, body);
