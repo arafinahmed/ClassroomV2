@@ -1,6 +1,6 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
-
+using System.Collections.Generic;
 
 namespace ClassroomV2.Common.Utilities
 {
@@ -40,6 +40,13 @@ namespace ClassroomV2.Common.Utilities
             client.Authenticate(_username, _password);
             client.Send(message);
             client.Disconnect(true);
+        }
+        public void BroadCast(IList<string> receivers, string subject, string body)
+        {
+            foreach(var receiver in receivers)
+            {
+                SendEmail(receiver, subject, body);
+            }
         }
     }
 }

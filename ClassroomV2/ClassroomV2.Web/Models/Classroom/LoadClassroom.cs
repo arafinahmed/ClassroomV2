@@ -94,7 +94,16 @@ namespace ClassroomV2.Web.Models.Classroom
                         }).ToArray()
             };
         }
-
+        internal IList<string> StudentsMail(int classroomId)
+        {
+            var data = _service.GetStudentByClassId(classroomId);
+            var mails = new List<string>();
+            foreach(var mail in data)
+            {
+                mails.Add(mail.mail);
+            }
+            return mails;
+        }
         internal bool AddStudentToClass(int classid, string email)
         {
             var res = _service.JoinClassroom(classid, email);
