@@ -21,7 +21,35 @@
         </div>
         <p>@Model.Description</p>
         <hr />
+        @{
+            if (Model.IsTeacher)
+            {
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-info" asp-area="" asp-controller="Classroom" asp-action="CreatePost" asp-route-id="@Model.ClassroomId">New Announcement</a>
+                </div>
+                <hr />
+            }
+        }
+        @{
+            foreach (var post in Model.Posts)
+            {
+                <div class="card">
+                            <div class="card-body">
+                                <small>@post.PostCreatedTime</small>
+                                <p>@post.Description</p>
 
+                                @{
+                                    if (!string.IsNullOrEmpty(post.FilePath))
+                                    {
+                                        <p>@Html.ActionLink("Download Attachment", "DownloadFile", new { path = post.FilePath, fileName = post.FileName })</p>
+                                    }
+                                }
+
+                            </div>
+                </div>
+                <br />
+            }
+        }
     </div>
 
 </div>

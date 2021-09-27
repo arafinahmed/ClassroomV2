@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using ClassroomV2.Manager.BusinessObjects;
 using ClassroomV2.Manager.Services;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,13 @@ namespace ClassroomV2.Web.Models.Classroom
 
         public string StudentEmail { get; set; }
         public string TeacherEmail { get; set; }
+
+        public string PostDescription { get; set; }
+        public string PostFilePath { get; set; }
+        public IFormFile PostFormFile { get; set; }
+        public string PostFileName { get; set; }
+
+        public List<Post> Posts = new List<Post>();
         private IClassroomService _service;
         private ILifetimeScope _scope;
         public LoadClassroom() { }
@@ -42,6 +51,16 @@ namespace ClassroomV2.Web.Models.Classroom
             ClassroomName = res.Name;
             Description = res.Description;
             ClassroomId = res.Id;
+        }
+
+        internal void GetPosts()
+        {
+            var posts = _service.GetAllPostByClassId(ClassroomId);
+            
+            foreach(var post in posts)
+            {
+                Posts.Insert(0, post);
+            }
         }
 
         internal object GetTeachers(int classroomId)
@@ -85,6 +104,18 @@ namespace ClassroomV2.Web.Models.Classroom
         {
             var res = _service.AddTeacherToClass(classid, email);
             return res.x;
+        }
+
+        internal void PostUpload()
+        {
+            _service.CreatePost(new Manager.BusinessObjects.Post
+            {
+                ClassroomId = ClassroomId,
+                Description = PostDescription,
+                FilePath = PostFilePath,
+                PostCreatedTime = DateTime.Now, 
+                FileName = PostFileName
+            });
         }
     }
 }

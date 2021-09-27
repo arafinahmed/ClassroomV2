@@ -9,6 +9,7 @@ namespace ClassroomV2.Manager.Profiles
         public ManagerProfile()
         {
             CreateMap<EO.Classroom, BO.Classroom>().ReverseMap();
+            CreateMap<EO.Post, BO.Post>().ReverseMap();
         }
     }
 }

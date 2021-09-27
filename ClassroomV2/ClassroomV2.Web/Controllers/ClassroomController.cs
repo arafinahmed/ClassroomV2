@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace ClassroomV2.Web.Controllers
@@ -42,6 +44,7 @@ namespace ClassroomV2.Web.Controllers
             var email = User.Identity.Name;
             var model = _scope.Resolve<LoadClassroom>();
             model.LoadClassRoomData(id, email);
+            model.GetPosts();
             return View(model);
         }
         public IActionResult CreateClassroom()
@@ -132,6 +135,55 @@ namespace ClassroomV2.Web.Controllers
                         $"<div><b>We hope your teaching will be very helpfull for our student.</b></div>");
             }
             return RedirectToAction("People", "Classroom", new { id = model.ClassroomId });
+        }
+
+        public IActionResult CreatePost(int id)
+        {
+            var email = User.Identity.Name;
+            var model = _scope.Resolve<LoadClassroom>();
+            model.LoadClassRoomData(id, email);
+            return View(model);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreatePost(LoadClassroom model)
+        {
+            var email = User.Identity.Name;
+            model.Resolve(_scope);
+            model.LoadClassRoomData(model.ClassroomId, email);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if(model.PostFormFile != null)
+                    {
+                        var filename = ContentDispositionHeaderValue.Parse(model.PostFormFile.ContentDisposition).FileName.Trim('"');
+                        model.PostFileName = filename;
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploded", Guid.Parse(_userManager.GetUserId(User)).ToString() + model.PostFormFile.FileName);
+                        model.PostFilePath = path;
+                        using (Stream stream = new FileStream(path, FileMode.Create))
+                        {
+                            await model.PostFormFile.CopyToAsync(stream);
+                        }
+                    }
+                    model.PostUpload();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    _logger.LogError(ex, "Failed in Upload");
+                    return View(model);
+                }
+                return RedirectToAction("Classroom", "Classroom", new { id = model.ClassroomId });
+            }
+            return View(model);
+        }
+        public FileResult DownloadFile(string path, string fileName)
+        {
+            //Read the File data into Byte Array.
+            byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+            //Send the File to Download.
+            return File(bytes, "application/octet-stream", fileName);
         }
     }
 }

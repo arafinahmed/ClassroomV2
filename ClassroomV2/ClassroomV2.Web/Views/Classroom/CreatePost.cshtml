@@ -1,0 +1,42 @@
+﻿@model ClassroomV2.Web.Models.Classroom.LoadClassroom
+@{
+    ViewData["Title"] = "CreatePost";
+}
+<div class="row">
+
+    <partial name="_MenuPartial" />
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>@Model.ClassroomName</h3>
+            </div>
+            <div class="col-md-1">
+                <h3>Post</h3>
+            </div>
+        </div>
+        <hr />
+        <form enctype="multipart/form-data" asp-controller="Classroom" asp-action="CreatePost" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-3">
+                <h5>Description</h5>
+                <input type="hidden" name="ClassroomId" id="ClassroomId" asp-for="ClassroomId" />
+                <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" asp-for="PostDescription" required></textarea>
+            </div>
+            <div>
+                <h5>Attachment</h5>
+                <input type="file" name="PostFormFile" id="PostFormFile" asp-for="PostFormFile" />
+                
+            </div>
+            <br />
+            <div>
+                <a type="button" class="btn btn-outline-danger" asp-area="" asp-controller="Classroom" asp-action="Classroom" asp-route-id="@Model.ClassroomId">Cancel</a>
+                <button type="submit" class="btn btn-outline-success">Post Announcement </button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+
+

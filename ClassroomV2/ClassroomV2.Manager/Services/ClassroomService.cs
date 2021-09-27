@@ -157,11 +157,22 @@ namespace ClassroomV2.Manager.Services
             {
                 var entity = _mapper.Map<Entities.Post>(post);
                 _unitOfWork.Post.Add(entity);
+                _unitOfWork.Save();
             }
             catch
             {
                 throw new InvalidOperationException("Post not Created");
             }
+        }
+        public IList<Post> GetAllPostByClassId(int classId)
+        {
+            var posts = new List<Post>();
+            var postEntities = _unitOfWork.Post.Get(x => x.ClassroomId == classId, "");
+            foreach(var post in postEntities)
+            {
+                posts.Add(_mapper.Map<Post>(post));
+            }
+            return posts;
         }
 
     }
