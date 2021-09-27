@@ -1,0 +1,29 @@
+﻿@model ClassroomV2.Web.Models.Classroom.SendMailModel
+@{
+    ViewData["Title"] = "SendEmail";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="col-md-8">
+        <h2>Send Message</h2>
+
+        <form asp-controller="Classroom" asp-action="SendEmail" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div>
+                <p>To : <b>@Model.ReceiverMail</b> </p>
+            </div>
+            <input type="hidden" asp-for="SenderMail" />
+            <input type="hidden" asp-for="Subject" />
+            <input type="hidden" asp-for="ClassId" />
+            <input type="hidden" asp-for="ReceiverMail" />
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea6" class="form-label">Your Message</label>
+                <textarea class="form-control" id="exampleFormControlTextarea9" rows="3" asp-for="Body"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-outline-success">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+

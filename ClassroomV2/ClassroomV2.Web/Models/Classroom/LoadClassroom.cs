@@ -74,7 +74,7 @@ namespace ClassroomV2.Web.Models.Classroom
                         select new string[]
                         {
                             record.mail,
-                            record.TeacherId.ToString()
+                            record.mail
                         }).ToArray()
             };
         }
@@ -90,7 +90,7 @@ namespace ClassroomV2.Web.Models.Classroom
                         select new string[]
                         {
                             record.mail,
-                            record.StudentId.ToString()
+                            record.mail
                         }).ToArray()
             };
         }

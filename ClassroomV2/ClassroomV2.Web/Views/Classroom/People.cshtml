@@ -18,12 +18,10 @@
                     "orderable": false,
                     "targets": 1,
                     "render": function (data, type, row) {
-                        return `<button type="submit" class="btn btn-primary btn-sm" onclick="window.location.href='/Classroom/Classroom/${data}'" value='${data}'>
-                                            <i class="fas fa-pencil-alt">
-                                            </i>
-                                            Send Mail
-                                        </button>
-                                        `;
+                        return `
+    <a type="button" class="btn btn-outline-info" href="/Classroom/SendEmail/?email=${data}&classId=@Model.ClassroomId" target="_blank" >
+        Send Mail
+    </a>`;
                     }
                 }
                 ]
@@ -43,19 +41,17 @@
                     "orderable": false,
                     "targets": 1,
                     "render": function (data, type, row) {
-                        return `<button type="submit" class="btn btn-primary btn-sm" onclick="window.location.href='/Classroom/Classroom/${data}'" value='${data}'>
-                                            <i class="fas fa-pencil-alt">
-                                            </i>
-                                            Send Mail
-                                        </button>
-                                        `;
+                        return `
+    <a type="button" class="btn btn-outline-info" href="/Classroom/SendEmail/?email=${data}&classId=@Model.ClassroomId" target="_blank" >
+        Send Mail
+    </a>`;
                     }
                 }
                 ]
             });
         });
     </script>
- }
+}
 
 <div class="row">
 

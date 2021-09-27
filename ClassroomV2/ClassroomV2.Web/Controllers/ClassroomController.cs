@@ -185,5 +185,32 @@ namespace ClassroomV2.Web.Controllers
             //Send the File to Download.
             return File(bytes, "application/octet-stream", fileName);
         }
+
+        public IActionResult SendEmail(string email, int classId)
+        {
+            var UserEmail = User.Identity.Name;
+            var model = _scope.Resolve<LoadClassroom>();
+            model.LoadClassRoomData(classId, email);
+            var sendMailModel = new SendMailModel {
+                ReceiverMail = email,
+                SenderMail = UserEmail,
+                ClassId = classId,
+                Subject = "Via " + model.ClassroomName
+            };
+
+            return View(sendMailModel);
+        }
+        [HttpPost]
+        public IActionResult SendEmail(SendMailModel model)
+        {
+            string messageBody = $"<p> You have a message new from <b> {model.SenderMail} </b></p>" +
+                $"<p>------------------------------</p>" +
+                $"<p>{model.Body}</p>"+
+                $"<p>------------------------------</p> " +
+                $"<p  ~   </p> " +
+                $"<p>Thank for using EduRoom </p>" ;
+            _emailService.SendEmail(model.ReceiverMail, model.Subject, messageBody);
+            return RedirectToAction("Classroom", "Classroom", new { id = model.ClassId });
+        }
     }
 }
