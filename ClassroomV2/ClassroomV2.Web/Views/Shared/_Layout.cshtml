@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ClassroomV2</title>
+    <title>@ViewData["Title"] - Edu Room</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/plugins/DataTables/datatables.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -18,11 +18,11 @@
             <div class="container">
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Classroom" asp-action="Index">ClassroomV2</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Classroom" asp-action="Index">Edu Room</a>
                 }
                 else
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ClassroomV2</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Edu Room</a>
                 }
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - ClassroomV2
+            &copy; 2021 - Edu Room
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
