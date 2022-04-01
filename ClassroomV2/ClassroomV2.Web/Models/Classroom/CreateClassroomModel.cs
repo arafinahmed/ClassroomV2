@@ -10,6 +10,7 @@ namespace ClassroomV2.Web.Models.Classroom
 {
     public class CreateClassroomModel
     {
+        public int Id { get; set; }
         [Required]
         public string ClassroomName { get; set; }
         public string Description { get; set; }
@@ -37,6 +38,18 @@ namespace ClassroomV2.Web.Models.Classroom
         {
             return _service.CreateClassroom(new ClassroomV2.Manager.BusinessObjects.Classroom
             {
+                ClassroomName = ClassroomName,
+                Description = Description,
+                CreatorId = AspUserId,
+                Email = email
+            });
+        }
+
+        internal int CloneClassroom()
+        {
+            return _service.CloneClassroom(new ClassroomV2.Manager.BusinessObjects.Classroom
+            {
+                Id = Id,
                 ClassroomName = ClassroomName,
                 Description = Description,
                 CreatorId = AspUserId,

@@ -18,5 +18,6 @@ namespace ClassroomV2.Manager.Services
         void CreateMaterial(Post post);
         IList<Material> GetAllMaterialsByClassId(int classId);
         Post Publish(int id);
+        int CloneClassroom(Classroom classroom);
     }
 }

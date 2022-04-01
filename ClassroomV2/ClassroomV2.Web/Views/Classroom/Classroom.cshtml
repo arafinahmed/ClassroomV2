@@ -14,7 +14,10 @@
                 @{
                     if (Model.IsTeacher)
                     {
-                        <p class="col-md-3"><button class="btn btn-outline-success">@Model.ClassroomId</button></p>
+                                <div class="row">
+                                    <p class="col-md-2"><button class="btn btn-outline-success">@Model.ClassroomId</button></p>
+                                    <p class="col-md-2 ml-2"><a type="button" class="btn btn-outline-info" asp-area="" asp-controller="Classroom" asp-action="CloneClassroom" asp-route-id="@Model.ClassroomId">Clone</a></p>
+                                </div>
                     }
                 }
             </div>

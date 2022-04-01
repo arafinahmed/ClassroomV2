@@ -39,6 +39,38 @@ namespace ClassroomV2.Manager.Services
             }
 
         }
+        public int CloneClassroom(Classroom classroom)
+        {
+            if (classroom == null)
+                throw new InvalidOperationException("no Classroom is provided");
+            try
+            {
+                var entity = new Entities.Classroom
+                {
+                    ClassroomName = classroom.ClassroomName,
+                    Description = classroom.Description,
+                    CreatorId = classroom.CreatorId
+                };
+
+                _unitOfWork.Classroom.Add(entity);
+                _unitOfWork.Save();
+                _unitOfWork.ClassUser.Add(new Entities.ClassUser { ClassId = entity.Id, email = classroom.Email });
+                _unitOfWork.Teacher.Add(new Entities.Teacher { ClassroomId = entity.Id, email = classroom.Email });
+                _unitOfWork.Save();
+                var materials = _unitOfWork.Material.Get(x => x.ClassroomId == classroom.Id, "");
+                foreach(var mat in materials)
+                {
+                    _unitOfWork.Material.Add(new Entities.Material { Description = mat.Description, ClassroomId = entity.Id, FilePath = mat.FilePath, FileName = mat.FileName, PostCreatedTime = mat.PostCreatedTime, Status = "Pending" });
+                }
+                _unitOfWork.Save();
+                return entity.Id;
+            }
+            catch
+            {
+                throw new Exception("Entity not added");
+            }
+
+        }
 
         public (bool x, string message) JoinClassroom(int classId, string email)
         {

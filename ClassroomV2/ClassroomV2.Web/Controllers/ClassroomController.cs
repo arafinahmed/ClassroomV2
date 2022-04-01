@@ -60,6 +60,30 @@ namespace ClassroomV2.Web.Controllers
         {
             return View();
         }
+        public IActionResult CloneClassroom(int id)
+        {
+            var model = _scope.Resolve<CreateClassroomModel>();
+            model.Id = id;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CloneClassroom(CreateClassroomModel model)
+        {
+            try
+            {
+                model.Resolve(_scope);
+                model.AspUserId = Guid.Parse(_userManager.GetUserId(User));
+                model.email = User.Identity.Name;
+                var classId = model.CloneClassroom();
+                return RedirectToAction("Classroom", "Classroom", new { id = classId });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         [HttpPost]
         public IActionResult CreateClassroom(CreateClassroomModel model)
         {
