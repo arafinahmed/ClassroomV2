@@ -31,8 +31,4 @@
 	  <ProjectReference Include="..\ClassroomV2.Membership\ClassroomV2.Membership.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="wwwroot\uploded\" />
-	</ItemGroup>
-
 </Project>
