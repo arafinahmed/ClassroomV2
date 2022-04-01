@@ -6,6 +6,13 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\uploded\**" />
+    <Content Remove="wwwroot\uploded\**" />
+    <EmbeddedResource Remove="wwwroot\uploded\**" />
+    <None Remove="wwwroot\uploded\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
@@ -29,10 +36,6 @@
 	  <ProjectReference Include="..\ClassroomV2.Common\ClassroomV2.Common.csproj" />
 	  <ProjectReference Include="..\ClassroomV2.Manager\ClassroomV2.Manager.csproj" />
 	  <ProjectReference Include="..\ClassroomV2.Membership\ClassroomV2.Membership.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="wwwroot\uploded\" />
 	</ItemGroup>
 
 </Project>
