@@ -15,5 +15,8 @@ namespace ClassroomV2.Manager.Services
         (bool x, string message) AddTeacherToClass(int classId, string email);
         void CreatePost(Post post);
         IList<Post> GetAllPostByClassId(int classId);
+        void CreateMaterial(Post post);
+        IList<Material> GetAllMaterialsByClassId(int classId);
+        Post Publish(int id);
     }
 }

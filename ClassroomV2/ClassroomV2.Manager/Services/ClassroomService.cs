@@ -113,6 +113,16 @@ namespace ClassroomV2.Manager.Services
             return teachers;
         }
 
+        public Post Publish(int id)
+        {
+            var mat = _unitOfWork.Material.GetById(id);
+            mat.Status = "Published";
+            _unitOfWork.Save();
+            var post = _mapper.Map<Post>(mat);
+            return post;
+
+        }
+
         public IList<Student> GetStudentByClassId(int Id)
         {
             var studentsEntities = _unitOfWork.Student.Get(x => x.ClassroomId == Id, "");
@@ -164,6 +174,24 @@ namespace ClassroomV2.Manager.Services
                 throw new InvalidOperationException("Post not Created");
             }
         }
+
+        public void CreateMaterial(Post post)
+        {
+            if (post == null)
+                throw new InvalidOperationException("no Classroom is provided");
+            try
+            {
+                var entity = _mapper.Map<Entities.Material>(post);
+                entity.Status = "Pending";
+                _unitOfWork.Material.Add(entity);
+                _unitOfWork.Save();
+            }
+            catch
+            {
+                throw new InvalidOperationException("Post not Created");
+            }
+        }
+
         public IList<Post> GetAllPostByClassId(int classId)
         {
             var posts = new List<Post>();
@@ -173,6 +201,17 @@ namespace ClassroomV2.Manager.Services
                 posts.Add(_mapper.Map<Post>(post));
             }
             return posts;
+        }
+
+        public IList<Material> GetAllMaterialsByClassId(int classId)
+        {
+            var materials = new List<Material>();
+            var matEntities = _unitOfWork.Material.Get(x => x.ClassroomId == classId, "");
+            foreach (var mat in matEntities)
+            {
+                materials.Add(_mapper.Map<Material>(mat));
+            }
+            return materials;
         }
 
     }

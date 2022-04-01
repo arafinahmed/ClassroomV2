@@ -11,6 +11,7 @@ namespace ClassroomV2.Web.Models.Classroom
 {
     public class LoadClassroom
     {
+        public int MaterialId { get; set; }
         public bool IsPermited { get; set; }
         public bool IsTeacher { get; set; }
         public bool IsStudent { get; set; }
@@ -28,6 +29,7 @@ namespace ClassroomV2.Web.Models.Classroom
         public string PostFileName { get; set; }
 
         public List<Post> Posts = new List<Post>();
+        public List<Material> Materials = new List<Material>();
         private IClassroomService _service;
         private ILifetimeScope _scope;
         public LoadClassroom() { }
@@ -61,6 +63,22 @@ namespace ClassroomV2.Web.Models.Classroom
             {
                 Posts.Insert(0, post);
             }
+        }
+
+        internal void GetMaterials()
+        {
+            var mats = _service.GetAllMaterialsByClassId(ClassroomId);
+
+            foreach (var mat in mats)
+            {
+                Materials.Add(mat);
+            }
+        }
+
+        internal Post Publish()
+        {
+            var post = _service.Publish(MaterialId);
+            return post;
         }
 
         internal object GetTeachers(int classroomId)
@@ -123,6 +141,18 @@ namespace ClassroomV2.Web.Models.Classroom
                 Description = PostDescription,
                 FilePath = PostFilePath,
                 PostCreatedTime = DateTime.Now, 
+                FileName = PostFileName
+            });
+        }
+
+        internal void MaterialUpload()
+        {
+            _service.CreateMaterial(new Manager.BusinessObjects.Post
+            {
+                ClassroomId = ClassroomId,
+                Description = PostDescription,
+                FilePath = PostFilePath,
+                PostCreatedTime = DateTime.Now,
                 FileName = PostFileName
             });
         }

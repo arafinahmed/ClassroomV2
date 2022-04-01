@@ -47,6 +47,15 @@ namespace ClassroomV2.Web.Controllers
             model.GetPosts();
             return View(model);
         }
+
+        public IActionResult Material(int id)
+        {
+            var email = User.Identity.Name;
+            var model = _scope.Resolve<LoadClassroom>();
+            model.LoadClassRoomData(id, email);
+            model.GetMaterials();
+            return View(model);
+        }
         public IActionResult CreateClassroom()
         {
             return View();
@@ -144,6 +153,80 @@ namespace ClassroomV2.Web.Controllers
             model.LoadClassRoomData(id, email);
             return View(model);
         }
+
+        public IActionResult CreateMaterial(int id)
+        {
+            var email = User.Identity.Name;
+            var model = _scope.Resolve<LoadClassroom>();
+            model.LoadClassRoomData(id, email);
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateMaterial(LoadClassroom model)
+        {
+            var email = User.Identity.Name;
+            model.Resolve(_scope);
+            model.LoadClassRoomData(model.ClassroomId, email);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if(model.PostFormFile != null)
+                    {
+                        var filename = ContentDispositionHeaderValue.Parse(model.PostFormFile.ContentDisposition).FileName.Trim('"');
+                        model.PostFileName = filename;
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploded", Guid.Parse(_userManager.GetUserId(User)).ToString() + model.PostFormFile.FileName);
+                        model.PostFilePath = path;
+                        using (Stream stream = new FileStream(path, FileMode.Create))
+                        {
+                            await model.PostFormFile.CopyToAsync(stream);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "File is required in Material");
+                        return View(model);
+                    }
+                    model.MaterialUpload();
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    _logger.LogError(ex, "Failed in Upload");
+                    return View(model);
+                }
+                return RedirectToAction("Material", "Classroom", new { id = model.ClassroomId });
+            }
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult PublishMaterial(LoadClassroom model)
+        {
+            var email = User.Identity.Name;
+            model.Resolve(_scope);
+            model.LoadClassRoomData(model.ClassroomId, email);
+
+            var post = model.Publish();
+            model.ClassroomId = post.ClassroomId;
+            model.PostDescription = post.Description;
+            model.PostFilePath = post.FilePath;
+            model.PostFileName = post.FileName;
+            model.PostUpload();
+
+            var mailList = model.StudentsMail(model.ClassroomId);
+            var body = $"{model.PostDescription}";
+            if (!string.IsNullOrEmpty(model.PostFilePath))
+            {
+                body = $"{model.PostDescription}" +
+                    $"<b>There is an attachment. Please Visit your classroom.</b>";
+            }
+            _emailService.BroadCast(mailList, "New Announcement in " + model.ClassroomName, body);
+            return RedirectToAction("Material", "Classroom", new { id = model.ClassroomId });
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePost(LoadClassroom model)
         {
@@ -154,7 +237,7 @@ namespace ClassroomV2.Web.Controllers
             {
                 try
                 {
-                    if(model.PostFormFile != null)
+                    if (model.PostFormFile != null)
                     {
                         var filename = ContentDispositionHeaderValue.Parse(model.PostFormFile.ContentDisposition).FileName.Trim('"');
                         model.PostFileName = filename;
