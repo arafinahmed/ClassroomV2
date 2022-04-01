@@ -40,5 +40,6 @@ namespace ClassroomV2.Manager.Context
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<ClassUser> ClassUsers { get; set; }
+        public DbSet<Material> Materials { get; set; }
     }
 }

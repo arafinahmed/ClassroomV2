@@ -22,12 +22,14 @@ namespace ClassroomV2.Manager.UnitOfWorks
 
         public IClassUserRepository ClassUser { get; private set; }
 
+        public IMaterialRepository Material { get; private set; }
         public ManagerUnitOfWork(IManagerContext context,
             IClassroomRepository classroom,
             ITeacherRepository teacher,
             IStudentRepository student,
             IPostRepository post, 
-            IClassUserRepository classUser
+            IClassUserRepository classUser,
+            IMaterialRepository material
             ) : base((DbContext)context)
         {
             Classroom = classroom;
@@ -35,6 +37,7 @@ namespace ClassroomV2.Manager.UnitOfWorks
             Student = student;
             Post = post;
             ClassUser = classUser;
+            Material = material;
         }
     }
 }

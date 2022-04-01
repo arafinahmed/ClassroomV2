@@ -51,6 +51,9 @@ namespace ClassroomV2.Manager
             builder.RegisterType<PostRepository>().As<IPostRepository>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<MaterialRepository>().As<IMaterialRepository>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<ClassroomService>().As<IClassroomService>()
                 .InstancePerLifetimeScope();
 

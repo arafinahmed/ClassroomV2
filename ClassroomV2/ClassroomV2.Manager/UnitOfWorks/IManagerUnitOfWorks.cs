@@ -15,5 +15,6 @@ namespace ClassroomV2.Manager.UnitOfWorks
         IStudentRepository Student { get; }
         IPostRepository Post { get; }
         IClassUserRepository ClassUser { get; }
+        IMaterialRepository Material { get; }
     }
 }
